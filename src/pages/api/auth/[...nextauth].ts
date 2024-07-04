@@ -1,5 +1,6 @@
 import PostgresAdapter from '@auth/pg-adapter';
 import Auth from 'next-auth';
+import { Adapter } from 'next-auth/adapters';
 import AzureADProvider from 'next-auth/providers/azure-ad';
 import { Pool } from 'pg';
 
@@ -26,8 +27,10 @@ export const options = {
   /**
    * The PostgresAdapter from the @auth/pg-adapter doesn't satisfy the Adapter 
    * interface from next-auth.
+   * 
+   * @see {@link https://github.com/nextauthjs/next-auth/issues/11330}
    */
-  adapter: PostgresAdapter(pool),
+  adapter: PostgresAdapter(pool) as Adapter,
 };
 
 export default Auth(options);
